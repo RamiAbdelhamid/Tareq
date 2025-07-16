@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom split hero animation helpers */
+.hero-top {
+  will-change: transform;
+}
+.hero-bottom {
+  will-change: transform;
+}
+
+.hero-bg-hidden {
+  transform: scaleY(0);
+}
+
+@keyframes heroZoom {
+  from {
+    transform: scaleY(1) scale(1);
+  }
+  to {
+    transform: scaleY(1) scale(1.1);
+  }
+}
+
+.hero-bg-reveal {
+  transform: scaleY(1);
+  animation: heroZoom 6s ease-in-out 1.5s forwards;
+}
+
+html, body {
+  font-family: 'Helvetica Neue', 'Helvetica Light', Helvetica, Arial, sans-serif;
+}
+
+.animated-once-border {
+  position: relative;
+}
+
+.animated-once-border::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  border: 2px solid white;
+  pointer-events: none;
+  animation: borderRun 2s ease forwards;
+}
+
+@keyframes borderRun {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 0;
+  }
+}
