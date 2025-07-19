@@ -1,245 +1,547 @@
-import React, { useState, useRef, useEffect } from 'react';
-import img1 from '../assets/garden/1.jpeg';
-import img2 from '../assets/garden/2.jpeg';
-import img3 from '../assets/garden/3.jpeg';
-import img4 from '../assets/garden/4.jpeg';
-import img5 from '../assets/garden/5.jpeg';
+// import { useState, useRef } from 'react';
 
-const gardenImages = [img1, img2, img3, img4, img5];
+// const projects = [
+//   {
+//     title: 'SEYMOUR WALK',
+//     category: 'RESIDENTIAL',
+//     image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop&q=80'
+//   },
+//   {
+//     title: 'ALEXANDER PLACE',
+//     category: 'RESIDENTIAL',
+//     image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop&q=80'
+//   },
+//   {
+//     title: 'NO. 40',
+//     category: 'RESIDENTIAL',
+//     image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop&q=80'
+//   },
+//   {
+//     title: 'WESTMINSTER LOFT',
+//     category: 'RESIDENTIAL',
+//     image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop&q=80'
+//   },
+//   {
+//     title: 'BROOKLYN HEIGHTS',
+//     category: 'RESIDENTIAL',
+//     image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&h=600&fit=crop&q=80'
+//   }
+// ];
 
-export default function Portfolio() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalIndex, setModalIndex] = useState(0);
-  const [selectedProject, setSelectedProject] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  const scrollRef = useRef(null);
+// export default function ArchitecturalSlider() {
+//   const [currentIndex, setCurrentIndex] = useState(1); // Start at index 1 to show multiple projects
+//   const [isDragging, setIsDragging] = useState(false);
+//   const [startX, setStartX] = useState(0);
+//   const [currentX, setCurrentX] = useState(0);
+//   const [dragOffset, setDragOffset] = useState(0);
+//   const containerRef = useRef();
 
-  const projects = [
-    {
-      id: 1,
-      title: 'GARDEN RESIDENCE',
-      type: 'RESIDENTIAL',
-      year: '2024',
-      location: 'California, USA',
-      description: 'A harmonious blend of modern architecture and natural landscape design, creating seamless indoor-outdoor living.',
-      images: gardenImages,
-      cover: gardenImages[0],
-      area: '2,500 sq ft',
-      status: 'COMPLETED'
-    },
-    {
-      id: 2,
-      title: 'URBAN LOFT',
-      type: 'RESIDENTIAL',
-      year: '2023',
-      location: 'New York, USA',
-      description: 'Industrial meets contemporary in this transformed warehouse space.',
-      images: gardenImages,
-      cover: gardenImages[1],
-      area: '1,800 sq ft',
-      status: 'COMPLETED'
-    },
-    {
-      id: 3,
-      title: 'CORPORATE TOWER',
-      type: 'COMMERCIAL',
-      year: '2024',
-      location: 'London, UK',
-      description: 'Sustainable office design with emphasis on natural light and employee wellness.',
-      images: gardenImages,
-      cover: gardenImages[2],
-      area: '15,000 sq ft',
-      status: 'IN PROGRESS'
-    }
-  ];
+//   const slideWidth = 600; // Width of each slide
+//   const visibleSlides = 4; // Number of slides to show at once
 
+//   const handleMouseDown = (e) => {
+//     setIsDragging(true);
+//     setStartX(e.clientX);
+//     setCurrentX(e.clientX);
+//   };
+
+//   const handleMouseMove = (e) => {
+//     if (!isDragging) return;
+    
+//     setCurrentX(e.clientX);
+//     const diff = e.clientX - startX;
+//     setDragOffset(diff);
+//   };
+
+//   const handleMouseUp = () => {
+//     if (!isDragging) return;
+    
+//     const diff = currentX - startX;
+//     const threshold = 80;
+
+//     if (Math.abs(diff) > threshold) {
+//       if (diff < 0 && currentIndex < projects.length - 1) {
+//         setCurrentIndex(currentIndex + 1);
+//       } else if (diff > 0 && currentIndex > 0) {
+//         setCurrentIndex(currentIndex - 1);
+//       }
+//     }
+    
+//     setIsDragging(false);
+//     setDragOffset(0);
+//   };
+
+//   const handleTouchStart = (e) => {
+//     setIsDragging(true);
+//     setStartX(e.touches[0].clientX);
+//     setCurrentX(e.touches[0].clientX);
+//   };
+
+//   const handleTouchMove = (e) => {
+//     if (!isDragging) return;
+    
+//     setCurrentX(e.touches[0].clientX);
+//     const diff = e.touches[0].clientX - startX;
+//     setDragOffset(diff);
+//   };
+
+//   const handleTouchEnd = () => {
+//     handleMouseUp();
+//   };
+
+//   const goToSlide = (index) => {
+//     setCurrentIndex(index);
+//   };
+
+//   return (
+//     <div className="bg-[#1a1a1a] min-h-screen flex flex-col justify-center overflow-hidden">
+
+
+//       {/* Main slider container */}
+//       <div className="relative max-w-10xl mx-auto w-full h-96 flex items-center mt-20">
+//         <div
+//           className="flex cursor-grab active:cursor-grabbing select-none pl-0"
+//           onMouseDown={handleMouseDown}
+//           onMouseMove={handleMouseMove}
+//           onMouseUp={handleMouseUp}
+//           onMouseLeave={handleMouseUp}
+//           onTouchStart={handleTouchStart}
+//           onTouchMove={handleTouchMove}
+//           onTouchEnd={handleTouchEnd}
+//           style={{
+//             transform: `translateX(calc(50% - ${slideWidth / 2}px - ${currentIndex * slideWidth}px + ${dragOffset}px))`,
+//             transition: isDragging ? 'none' : 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+//           }}
+//         >
+//           {projects.map((project, index) => {
+//             const isActive = index === currentIndex;
+            
+//             return (
+//               <div
+//                 key={index}
+//                 className="flex-shrink-0 px-4"
+//                 style={{ width: `${slideWidth}px` }}
+//               >
+//                 <div className="relative">
+//                   <img
+//                     src={project.image}
+//                     alt={project.title}
+//                     className="object-cover transition-all duration-500"
+//                     style={{ width: '721px', height: '280px' }}                    draggable="false"
+//                   />
+                  
+//                   <div className="mt-6">
+//                     <h2 className="text-sm tracking-[0.3em] uppercase text-white font-normal">
+//                       {project.title}
+//                     </h2>
+//                     <p className="text-xs mt-1 tracking-[0.2em] uppercase text-gray-400">
+//                       {project.category}
+//                     </p>
+//                   </div>
+//                 </div>
+//               </div>
+//             );
+//           })}
+//         </div>
+//       </div>
+
+//       {/* Progress bar */}
+//       <div className="w-80 h-px bg-gray-700 relative mx-auto mt-16">
+//         <div
+//           className="h-full bg-white transition-all duration-500 ease-out"
+//           style={{
+//             width: `${((currentIndex + 1) / projects.length) * 100}%`
+//           }}
+//         ></div>
+//       </div>
+
+//       {/* Dot navigation */}
+//       <div className="flex space-x-2 mt-8 justify-center">
+//         {projects.map((_, index) => (
+//           <button
+//             key={index}
+//             onClick={() => goToSlide(index)}
+//             className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+//               index === currentIndex
+//                 ? 'bg-white'
+//                 : 'bg-gray-600 hover:bg-gray-400'
+//             }`}
+//           />
+//         ))}
+//       </div>
+
+//       {/* Project counter */}
+//       <div className="absolute bottom-8 right-8 text-gray-500 text-xs tracking-wider">
+//         <span className="text-white">{String(currentIndex + 1).padStart(2, '0')}</span>
+//         <span className="mx-1">/</span>
+//         <span>{String(projects.length).padStart(2, '0')}</span>
+//       </div>
+//     </div>
+//   );
+// }
+
+import { useState, useRef, useEffect } from 'react';
+
+const projects = [
+  {
+    title: 'SEYMOUR WALK',
+    category: 'RESIDENTIAL',
+    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop&q=80',
+    description: 'Modern residential design with contemporary finishes and open-plan living spaces.'
+  },
+  {
+    title: 'ALEXANDER PLACE',
+    category: 'RESIDENTIAL',
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop&q=80',
+    description: 'Elegant townhouse featuring traditional architecture with modern amenities.'
+  },
+  {
+    title: 'NO. 40',
+    category: 'RESIDENTIAL',
+    image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop&q=80',
+    description: 'Luxury apartment complex with innovative spatial design and premium materials.'
+  },
+  {
+    title: 'WESTMINSTER LOFT',
+    category: 'RESIDENTIAL',
+    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop&q=80',
+    description: 'Industrial loft conversion featuring exposed brick and high ceilings.'
+  },
+  {
+    title: 'BROOKLYN HEIGHTS',
+    category: 'RESIDENTIAL',
+    image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&h=600&fit=crop&q=80',
+    description: 'Waterfront penthouse with panoramic views and sophisticated interiors.'
+  }
+];
+
+export default function ArchitecturalSlider() {
+  const [currentIndex, setCurrentIndex] = useState(1);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [currentX, setCurrentX] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [reveal, setReveal] = useState(false);
+  const [showTitle, setShowTitle] = useState(false);
+  const [showSubtitle, setShowSubtitle] = useState(false);
+  const [zoomHero, setZoomHero] = useState(false);
+  const containerRef = useRef();
+  const detailsRef = useRef(null);
+  const dragEnded = useRef(false);
+  const slideWidth = 600;
+
+  // Full-screen viewer animation effects
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1000);
-    return () => clearTimeout(timer);
-  }, []);
+    if (selectedProject) {
+      setTimeout(() => setReveal(true), 100);
+      setTimeout(() => setShowTitle(true), 1200);
+      setTimeout(() => setShowSubtitle(true), 1800);
+      setTimeout(() => setZoomHero(true), 200);
+    } else {
+      setReveal(false);
+      setShowTitle(false);
+      setShowSubtitle(false);
+      setZoomHero(false);
+    }
+  }, [selectedProject]);
 
-  const openModal = (projectIdx, imgIdx = 0) => {
-    setSelectedProject(projectIdx);
-    setModalIndex(imgIdx);
-    setModalOpen(true);
+  const handleMouseDown = (e) => {
+    setIsDragging(false); // Reset first
+    setStartX(e.clientX);
+    setCurrentX(e.clientX);
   };
 
-  const closeModal = () => setModalOpen(false);
-  const nextImg = () => setModalIndex((i) => (i + 1) % projects[selectedProject].images.length);
-  const prevImg = () => setModalIndex((i) => (i - 1 + projects[selectedProject].images.length) % projects[selectedProject].images.length);
+  const handleMouseMove = (e) => {
+    if (startX === 0) return;
+    
+    const diff = Math.abs(e.clientX - startX);
+    if (diff > 5 && !isDragging) {
+      setIsDragging(true);
+    }
+    
+    if (isDragging) {
+      setCurrentX(e.clientX);
+      setDragOffset(e.clientX - startX);
+    }
+  };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-white text-2xl font-light tracking-widest">LOADING...</div>
-      </div>
-    );
-  }
+  const handleMouseUp = () => {
+    if (isDragging) {
+      const diff = currentX - startX;
+      const threshold = 80;
+  
+      if (Math.abs(diff) > threshold) {
+        if (diff < 0 && currentIndex < projects.length - 1) {
+          setCurrentIndex(currentIndex + 1);
+        } else if (diff > 0 && currentIndex > 0) {
+          setCurrentIndex(currentIndex - 1);
+        }
+      }
+      
+      dragEnded.current = true;
+      setTimeout(() => {
+        dragEnded.current = false;
+      }, 100);
+    }
+    
+    setIsDragging(false);
+    setDragOffset(0);
+    setStartX(0);
+    setCurrentX(0);
+  };
+
+  const handleTouchStart = (e) => {
+    setIsDragging(false);
+    setStartX(e.touches[0].clientX);
+    setCurrentX(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    if (startX === 0) return;
+    
+    const diff = Math.abs(e.touches[0].clientX - startX);
+    if (diff > 5 && !isDragging) {
+      setIsDragging(true);
+    }
+    
+    if (isDragging) {
+      setCurrentX(e.touches[0].clientX);
+      setDragOffset(e.touches[0].clientX - startX);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    handleMouseUp();
+  };
+
+  const goToSlide = (index) => {
+    setCurrentIndex(index);
+  };
+
+  const handleImageClick = (project, e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // إذا كان هناك سحب مؤخراً، لا تفتح الصورة
+    if (isDragging || dragEnded.current) {
+      return;
+    }
+    
+    setSelectedProject(project);
+    
+    setTimeout(() => {
+      detailsRef.current?.scrollIntoView({ behavior: 'auto' });
+    }, 100);
+  };
+
+  const closeFullScreen = () => {
+    setSelectedProject(null);
+  };
+
+  // Handle escape key to close full-screen viewer
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && selectedProject) {
+        closeFullScreen();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [selectedProject]);
 
   return (
-    <div className="min-h-screen bg-black">
-      {/* Header */}
-      <div className="px-6 py-16 text-center">
-        <h1 className="text-5xl md:text-7xl font-thin text-white tracking-widest mb-6">
-          PORTFOLIO
-        </h1>
-        <div className="w-32 h-px bg-gradient-to-r from-transparent via-white to-transparent mx-auto mb-8"></div>
-        <p className="text-white/60 text-lg font-light max-w-2xl mx-auto">
-          Showcasing innovative design solutions that redefine spaces and experiences
-        </p>
-      </div>
-
-      {/* Projects Grid */}
-      <div className="px-6 pb-20">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-            {projects.map((project, idx) => (
-              <div
-                key={project.id}
-                className="group cursor-pointer"
-                onClick={() => openModal(idx)}
-              >
-                <div className="relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 h-[500px]">
-                  {/* Project Image */}
-                  <div className="relative h-[300px] overflow-hidden">
+    <>
+      <div className="bg-[#1a1a1a] min-h-screen flex flex-col justify-center overflow-hidden">
+        {/* Main slider container */}
+        <div className="relative max-w-10xl mx-auto w-full h-96 flex items-center mt-20">
+          <div
+            className="flex cursor-grab active:cursor-grabbing select-none pl-0"
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            style={{
+              transform: `translateX(calc(50% - ${slideWidth / 2}px - ${currentIndex * slideWidth}px + ${dragOffset}px))`,
+              transition: isDragging ? 'none' : 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+            }}
+          >
+            {projects.map((project, index) => {
+              const isActive = index === currentIndex;
+              
+              return (
+                <div
+                  key={index}
+                  className="flex-shrink-0 px-4"
+                  style={{ width: `${slideWidth}px` }}
+                >
+                  <div className="relative">
                     <img
-                      src={project.cover}
+                      src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                      className="object-cover transition-all duration-500 cursor-pointer hover:brightness-110"
+                      style={{ width: '721px', height: '280px' }}
+                      draggable="false"
+                      onClick={(e) => handleImageClick(project, e)}
+                      onMouseDown={(e) => e.preventDefault()}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     
-                    {/* Status Badge */}
-                    <div className="absolute top-4 right-4">
-                      <span className={`px-3 py-1 text-xs font-light tracking-wide ${
-                        project.status === 'COMPLETED' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 
-                        'bg-orange-500/20 text-orange-400 border border-orange-500/30'
-                      }`}>
-                        {project.status}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  {/* Project Info */}
-                  <div className="p-6 h-[200px] flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-white/60 text-sm font-light tracking-wide">{project.type}</span>
-                        <span className="text-white/60 text-sm font-light">{project.year}</span>
-                      </div>
-                      <h3 className="text-white text-xl font-light tracking-wide mb-3 group-hover:text-white/80 transition-colors">
+                    <div className="mt-6">
+                      <h2 className="text-sm tracking-[0.3em] uppercase text-white font-normal">
                         {project.title}
-                      </h3>
-                      <p className="text-white/60 text-sm leading-relaxed mb-4 line-clamp-2">
-                        {project.description}
+                      </h2>
+                      <p className="text-xs mt-1 tracking-[0.2em] uppercase text-gray-400">
+                        {project.category}
                       </p>
                     </div>
-                    
-                    <div className="flex items-center justify-between text-white/50 text-xs">
-                      <span>{project.location}</span>
-                      <span>{project.area}</span>
-                    </div>
-                  </div>
-                  
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <div className="text-white text-sm font-light tracking-widest">VIEW PROJECT</div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
+        </div>
+
+        {/* Progress bar */}
+        <div className="w-80 h-px bg-gray-700 relative mx-auto mt-16">
+          <div
+            className="h-full bg-white transition-all duration-500 ease-out"
+            style={{
+              width: `${((currentIndex + 1) / projects.length) * 100}%`
+            }}
+          ></div>
+        </div>
+
+        {/* Dot navigation */}
+        <div className="flex space-x-2 mt-8 justify-center">
+          {projects.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                index === currentIndex
+                  ? 'bg-white'
+                  : 'bg-gray-600 hover:bg-gray-400'
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Project counter */}
+        <div className="absolute bottom-8 right-8 text-gray-500 text-xs tracking-wider">
+          <span className="text-white">{String(currentIndex + 1).padStart(2, '0')}</span>
+          <span className="mx-1">/</span>
+          <span>{String(projects.length).padStart(2, '0')}</span>
         </div>
       </div>
 
-      {/* Modal Gallery */}
-      {modalOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
-          onClick={closeModal}
-        >
+
+
+      
+
+      {/* Full-screen image viewer */}
+      {selectedProject && (
+        <div ref={detailsRef} className="fixed inset-0  h-screen w-full flex flex-col justify-center items-center bg-center relative overflow-hidden">
+          
+          {/* Hero Background with slow zoom */}
           <div
-            className="relative w-full max-w-6xl mx-4 bg-black/80 backdrop-blur-md border border-white/20 overflow-hidden"
-            onClick={e => e.stopPropagation()}
+            className={`absolute inset-0 z-0 transition-transform duration-[20000ms] ease-out
+              ${zoomHero ? 'scale-110' : 'scale-100'}`}
+            style={{
+              backgroundImage: `url(${selectedProject.image})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
           >
-            {/* Modal Header */}
-            <div className="flex items-center justify-between p-6 border-b border-white/20">
-              <div>
-                <h3 className="text-white text-2xl font-light tracking-wide">
-                  {projects[selectedProject].title}
-                </h3>
-                <p className="text-white/60 text-sm mt-1">
-                  {projects[selectedProject].type} • {projects[selectedProject].year}
-                </p>
-              </div>
-              <button
-                onClick={closeModal}
-                className="text-white/60 hover:text-white text-2xl transition-colors"
-              >
-                ×
-              </button>
-            </div>
+            <div className="absolute inset-0 bg-black/50"></div>
+          </div>
+
+          {/* Reveal Overlay */}
+          <div
+            className={`absolute inset-0 z-10 bg-white origin-center transition-transform duration-[2000ms] ease-in-out
+              ${reveal ? 'scale-y-0' : 'scale-y-100'}`}
+            style={{ transformOrigin: 'center' }}
+          />
+
+          {/* Close button */}
+          {/* <button
+            onClick={closeFullScreen}
+            className="absolute top-8 right-8 z-30 w-12 h-12 flex items-center justify-center text-white hover:bg-white/20 transition-colors duration-300 rounded-full"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button> */}
+
+          {/* Text & Button */}
+          <div className="relative z-20 flex flex-col items-start justify-center h-full w-full pl-8 md:pl-20 mt-20 md:mt-70">
             
-            {/* Modal Content */}
-            <div className="flex flex-col lg:flex-row">
-              {/* Image Section */}
-              <div className="lg:w-2/3 relative">
-                <img
-                  src={projects[selectedProject].images[modalIndex]}
-                  alt={`${projects[selectedProject].title} ${modalIndex + 1}`}
-                  className="w-full h-[60vh] lg:h-[70vh] object-cover"
-                />
-                
-                {/* Navigation Arrows */}
-                <button
-                  onClick={prevImg}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/70 backdrop-blur-sm border border-white/30 text-white hover:bg-white hover:text-black transition-all duration-300 flex items-center justify-center text-xl font-light"
-                >
-                  ←
-                </button>
-                <button
-                  onClick={nextImg}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/70 backdrop-blur-sm border border-white/30 text-white hover:bg-white hover:text-black transition-all duration-300 flex items-center justify-center text-xl font-light"
-                >
-                  →
-                </button>
-                
-                {/* Image Counter */}
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 px-4 py-2 text-white/80 text-sm">
-                  {modalIndex + 1} / {projects[selectedProject].images.length}
-                </div>
-              </div>
+            <p
+              className={`text-sm mb-5 tracking-widest text-white mb-2 transition-all duration-700 text-left
+                ${showTitle ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+              style={{
+                fontFamily: "'Graphik', 'Futura', 'Futura Light', Arial, sans-serif",
+                fontWeight: 300,
+                letterSpacing: '0.1em'
+              }}
+            >
+              {selectedProject.category}
+            </p>
+
+            <h1
+              className={`text-6xl font-normal text-white drop-shadow-lg mb-4 transition-all duration-700 text-left
+                ${showTitle ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+              style={{ fontFamily: "Futura, 'Futura Light', Arial, sans-serif", fontWeight: 50 }}
+            >
+              {selectedProject.title}
+            </h1>
+            
+            <p
+              className={`text-xl mb-10 text-white drop-shadow transition-all duration-700 text-left max-w-2xl
+                ${showSubtitle ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+              style={{ fontFamily: "Futura, 'Futura Light', Arial, sans-serif", fontWeight: 400 }}
+            >
+              {selectedProject.description}
+            </p>
+
+            <div className={`flex gap-4 ${showSubtitle ? 'animated-once-border' : ''}`}>
+              <button
+                className="group relative px-12 py-4 bg-transparent text-white font-light text-lg tracking-widest transition-all duration-500 hover:bg-white hover:text-black overflow-hidden border border-white/30"
+              >
+                <span className="relative z-10">VIEW PROJECT</span>
+                <div className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+              </button>
               
-              {/* Project Details */}
-              <div className="lg:w-1/3 p-6 bg-black/60">
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="text-white text-sm font-light tracking-wide mb-2 uppercase">Description</h4>
-                    <p className="text-white/80 leading-relaxed">
-                      {projects[selectedProject].description}
-                    </p>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <span className="text-white/60 text-sm">Location:</span>
-                      <span className="text-white ml-2">{projects[selectedProject].location}</span>
-                    </div>
-                    <div>
-                      <span className="text-white/60 text-sm">Area:</span>
-                      <span className="text-white ml-2">{projects[selectedProject].area}</span>
-                    </div>
-                    <div>
-                      <span className="text-white/60 text-sm">Status:</span>
-                      <span className="text-white ml-2">{projects[selectedProject].status}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <button
+                onClick={closeFullScreen}
+                className="group relative px-12 py-4 bg-white/10 text-white font-light text-lg tracking-widest transition-all duration-500 hover:bg-white hover:text-black overflow-hidden backdrop-blur-sm"
+              >
+                <span className="relative z-10">BACK TO GALLERY</span>
+                <div className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+              </button>
             </div>
           </div>
         </div>
       )}
-    </div>
+
+      <style jsx>{`
+        .animated-once-border {
+          animation: drawBorder 1s ease-out forwards;
+        }
+
+        @keyframes drawBorder {
+          0% {
+            border: 2px solid transparent;
+          }
+          100% {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+          }
+        }
+      `}</style>
+    </>
   );
 }
+
